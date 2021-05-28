@@ -825,6 +825,7 @@ div.templately-manage-accounts h1 {
     -ms-flex-align: center;
     align-items: center; }
   .templately-items-header-wrapper.templately-header-sticky {
+    position: -webkit-sticky;
     position: sticky;
     top: -30px;
     left: 0;
@@ -2674,8 +2675,7 @@ span.templately-back-2-library {
       .templately-preview-widget .templately-item-meta.templately-dependencies-wrapper p {
         margin-bottom: 0; }
     .templately-preview-widget .templately-item-meta .templately-dependencies {
-      display: inline-flex;
-      align-items: center;
+      display: inline-block;
       margin: 0;
       padding: 0;
       margin-left: 10px; }
@@ -3392,7 +3392,6 @@ a.button.templately-modal-button {
       -ms-flex-align: center;
       align-items: center; }
       .templately-installer-widget ul li span.templately-success,
-      .templately-installer-widget ul li span.templately-warning,
       .templately-installer-widget ul li span.templately-installing,
       .templately-installer-widget ul li button.templately-retry {
         background: rgba(88, 246, 87, 0.69);
@@ -3407,15 +3406,12 @@ a.button.templately-modal-button {
         line-height: 12px;
         margin-left: 10px; }
         .templately-installer-widget ul li span.templately-success > span,
-        .templately-installer-widget ul li span.templately-warning > span,
         .templately-installer-widget ul li span.templately-installing > span,
         .templately-installer-widget ul li button.templately-retry > span {
           font-size: 14px;
           width: auto;
           height: auto;
           margin-right: 5px; }
-      .templately-installer-widget ul li span.templately-warning {
-        background: rgba(230, 126, 34, 0.69); }
       .templately-installer-widget ul li span.templately-installing {
         background-color: #ffeb7f;
         color: #000; }
@@ -3440,9 +3436,6 @@ a.button.templately-modal-button {
         content: none; }
       .templately-installer-widget ul li .templately-checkbox input[type="checkbox"]:checked + label::after {
         content: ""; }
-      .templately-installer-widget ul li .templately-checkbox input[type="checkbox"]:disabled + label::before {
-        background-color: #ddd;
-        border-color: #ddd; }
       .templately-installer-widget ul li .templately-checkbox label {
         position: relative; }
         .templately-installer-widget ul li .templately-checkbox label::after, .templately-installer-widget ul li .templately-checkbox label::before {

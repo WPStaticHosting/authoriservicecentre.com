@@ -20,9 +20,10 @@
 	border-color: #E0E1E3 transparent transparent transparent;
 }
 
-.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar,
+
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-content-wrap::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar {
+.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar,
+.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
     background-color: #34383C;
 }
 

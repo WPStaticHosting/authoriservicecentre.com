@@ -31,7 +31,7 @@ WPFormsChallenge.builder = window.WPFormsChallenge.builder || ( function( docume
 			$( window ).on( 'load', function() {
 
 				// in case of jQuery 3.+ we need to wait for an `ready` event first.
-				if ( typeof $.ready.then === 'function' ) {
+				if ( $.isFunction( $.ready.then ) ) {
 					$.ready.then( app.load );
 				} else {
 					app.load();

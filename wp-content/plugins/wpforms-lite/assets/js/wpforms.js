@@ -1,4 +1,4 @@
-/* global wpforms_settings, grecaptcha, hcaptcha, wpformsRecaptchaCallback, wpforms_validate, wpforms_datepicker, wpforms_timepicker, Mailcheck, Choices, WPFormsPasswordField */
+/* global wpforms_settings, grecaptcha, hcaptcha, wpformsRecaptchaCallback, wpforms_validate, wpforms_datepicker, wpforms_timepicker, Mailcheck, Choices */
 
 'use strict';
 
@@ -289,12 +289,6 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 					}
 					return this.optional( element ) || value.replace( /[^\d]/g, '' ).length > 0;
 				}, wpforms_settings.val_phone );
-
-				// Validate password strength.
-				$.validator.addMethod( 'password-strength', function( value, element ) {
-
-					return WPFormsPasswordField.passwordStrength( value, element ) >= Number( $( element ).data( 'password-strength-level' ) );
-				}, wpforms_settings.val_password_strength );
 
 				// Finally load jQuery Validation library for our forms.
 				$( '.wpforms-validate' ).each( function() {
@@ -829,7 +823,7 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 		loadChoicesJS: function() {
 
 			// Loads if function exists.
-			if ( typeof window.Choices !== 'function' ) {
+			if ( ! $.isFunction( window.Choices ) ) {
 
 				return;
 			}
@@ -1185,7 +1179,7 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 
 			app.animateScrollTop( offset.top - 75, 750 ).done( function() {
 				var $error = $field.find( '.wpforms-error' ).first();
-				if ( typeof $error.focus === 'function' ) {
+				if ( app.isFunction( $error.focus ) ) {
 					$error.focus();
 				}
 			} );
@@ -1344,13 +1338,12 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 
 			var $form             = $( '#om-' + optinId ).find( '.wpforms-form' ),
 				$captchaContainer = $form.find( '.wpforms-recaptcha-container' ),
-				$captcha          = $form.find( '.g-recaptcha' );
+				$captcha          = $form.find( '.g-recaptcha' ),
+				captchaSiteKey    = $captcha.attr( 'data-sitekey' ),
+				captchaID         = 'recaptcha-' + Date.now(),
+				apiVar            = $captchaContainer.hasClass( 'wpforms-is-hcaptcha' ) ? hcaptcha : grecaptcha;
 
 			if ( $form.length && $captcha.length ) {
-
-				var captchaSiteKey = $captcha.attr( 'data-sitekey' ),
-					captchaID      = 'recaptcha-' + Date.now(),
-					apiVar         = $captchaContainer.hasClass( 'wpforms-is-hcaptcha' ) ? hcaptcha : grecaptcha;
 
 				$captcha.remove();
 				$captchaContainer.prepend( '<div class="g-recaptcha" id="' + captchaID + '" data-sitekey="' + captchaSiteKey + '"></div>' );
@@ -1795,11 +1788,6 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 		 */
 		formSubmit: function( $form ) {
 
-			// Form element was passed from vanilla JavaScript.
-			if ( ! ( $form instanceof jQuery ) ) {
-				$form = $( $form );
-			}
-
 			$form.trigger( 'wpformsBeforeFormSubmit' );
 
 			if ( $form.hasClass( 'wpforms-ajax-form' ) && typeof FormData !== 'undefined' ) {
@@ -2122,14 +2110,12 @@ var wpforms = window.wpforms || ( function( document, window, $ ) {
 		animateScrollTop: function( position, duration, complete ) {
 
 			duration = duration || 1000;
-			complete = typeof complete === 'function' ? complete : function() {};
+			complete = app.isFunction( complete ) ? complete : function() {};
 			return $( 'html, body' ).animate( { scrollTop: parseInt( position, 10 ) }, { duration: duration, complete: complete } ).promise();
 		},
 
 		/**
 		 * Check if object is a function.
-		 *
-		 * @deprecated 1.6.7
 		 *
 		 * @since 1.5.8
 		 *
